@@ -1,0 +1,10 @@
+<h2>Home</h2>
+<div *ngIf="!currentUser; else loggedIn">
+  <p><a routerLink="signup">Signup</a> or <a routerLink="login">login</a></p>
+</div>
+<ng-template #loggedIn>
+  <div>
+    <p>Logged in as <strong>{{currentUser.getUsername()}}</strong></p>
+    <p><button (click)="onLogout()">Log out</button></p>
+  </div>
+  </ng-template>

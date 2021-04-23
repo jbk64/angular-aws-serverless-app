@@ -1,0 +1,13 @@
+<h2>Confirm registration</h2>
+<form [formGroup]="confirmationForm">
+  <div>
+    <label for="code">Verification code:</label>
+    <input
+      id="code"
+      type="text"
+      formControlName="code"
+    />
+  </div>
+  <button type="button" (click)="onConfirm()">Verify</button>
+  <button type="button" (click)="onResend()">Resend</button>
+</form>
