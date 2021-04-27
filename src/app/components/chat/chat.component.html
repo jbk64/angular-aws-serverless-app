@@ -1,5 +1,5 @@
 <div id="message-container">
-  <p *ngFor="let m of messages" ><strong>{{m.sent_by}}</strong> {{m.message}}</p>
+  <div *ngFor="let message of messages"><strong>{{message.sent_by}}</strong> ({{message.timestamp}}) {{message.text}}</div>
 </div>
 <br>
 <form [formGroup]="chatForm">

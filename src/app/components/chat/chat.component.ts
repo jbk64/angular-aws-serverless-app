@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ChatService} from "../../services/chat.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CognitoService} from "../../services/cognito.service";
+import {ChatMessage} from "../../types/ChatMessage";
 
 @Component({
   selector: 'app-chat',
@@ -10,7 +11,7 @@ import {CognitoService} from "../../services/cognito.service";
 })
 export class ChatComponent implements OnInit {
   chatForm: FormGroup
-  messages = []
+  messages: ChatMessage[] = []
   constructor(
     private chatService: ChatService,
     private formBuilder: FormBuilder,
@@ -26,7 +27,6 @@ export class ChatComponent implements OnInit {
       .subscribe({
         next: message => {
           this.messages.push(message)
-          console.log(message)
         }
       })
   }
