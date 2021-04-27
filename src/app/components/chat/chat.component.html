@@ -1,0 +1,8 @@
+<div id="message-container">
+  <p *ngFor="let m of messages" ><strong>{{m.sent_by}}</strong> {{m.message}}</p>
+</div>
+<br>
+<form [formGroup]="chatForm">
+  <input type="text" formControlName="message" (keydown.enter)="onSend()">
+</form>
+<button type="submit" (click)="onSend()">Send</button>

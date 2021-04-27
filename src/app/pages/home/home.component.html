@@ -4,7 +4,7 @@
 </div>
 <ng-template #loggedIn>
   <div>
-    <p>Logged in as <strong>{{currentUser.getUsername()}}</strong></p>
-    <p><button (click)="onLogout()">Log out</button></p>
+    <p>Logged in as <strong>{{currentUser.getUsername()}}</strong> (<a (click)="onLogout()" href="#">log out</a>)</p>
   </div>
-  </ng-template>
+  <app-chat></app-chat>
+</ng-template>
