@@ -13,7 +13,7 @@ import {CognitoService} from "../../../services/cognito.service";
     }
 
     nb-chat {
-      width: 500px;
+      width: 600px;
     }
   `],
 })

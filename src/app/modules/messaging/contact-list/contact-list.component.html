@@ -1,7 +1,9 @@
 <input type="text"
        nbInput
        shape="rectangle"
-       placeholder="Search contacts">
+       placeholder="Search contacts"
+       [fullWidth]="true"
+>
 <nb-card>
     <nb-list>
       <nb-list-item *ngFor="let contact of contacts">
