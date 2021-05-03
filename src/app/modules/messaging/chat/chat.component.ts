@@ -1,27 +1,32 @@
 import {Component, OnInit} from '@angular/core';
-import {ChatService} from "../../services/chat.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CognitoService} from "../../services/cognito.service";
-import {ChatMessage} from "../../types/ChatMessage";
+import {ChatService} from "../../../services/chat.service";
+import {CognitoService} from "../../../services/cognito.service";
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: ['./chat.component.css'],
+  styles: [`
+    ::ng-deep nb-layout-column {
+      justify-content: center;
+      display: flex;
+    }
+
+    nb-chat {
+      width: 500px;
+    }
+  `],
 })
+
 export class ChatComponent implements OnInit {
-  chatForm: FormGroup
-  messages: ChatMessage[] = []
+  messages: any[] = []
+
   constructor(
     private chatService: ChatService,
-    private formBuilder: FormBuilder,
     private cognitoService: CognitoService) {
   }
 
   ngOnInit(): void {
-    this.chatForm = this.formBuilder.group({
-      message: ['', Validators.required]
-    })
     this.chatService
       .getNewMessageEmitter()
       .subscribe({
@@ -31,10 +36,17 @@ export class ChatComponent implements OnInit {
       })
   }
 
-  onSend() {
-    const {message} = this.chatForm.value
+  onSend($event) {
+    const {message} = $event
     const cognitoUser = this.cognitoService.getCurrentUser()
     this.chatService.sendMessage(message, cognitoUser)
-    this.chatForm.reset()
+    this.messages.push({
+      text: message,
+      // date: new Date(),
+      reply: false,
+      user: {
+        name: cognitoUser.getUsername()
+      },
+    });
   }
 }

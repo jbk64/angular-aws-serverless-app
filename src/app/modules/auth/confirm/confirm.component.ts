@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../../services/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CognitoService} from "../../services/cognito.service";
+import {CognitoService} from "../../../services/cognito.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({

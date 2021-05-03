@@ -3,23 +3,24 @@ import {WebsocketService} from "./websocket.service";
 import {environment} from "../../environments/environment";
 import {CognitoUser} from "amazon-cognito-identity-js";
 import {MessageAdapter} from "../adapters/message.adapter";
-import {ChatMessage} from "../types/ChatMessage";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
   private url = environment.awsWebsocketApiUrl
-  private newMessageEmitter: EventEmitter<ChatMessage> = new EventEmitter()
+  private newMessageEmitter: EventEmitter<any> = new EventEmitter()
 
   constructor(private websocketService: WebsocketService) {
     this.websocketService.connect(this.url).subscribe(
       {
         next: messageEvent => {
           const { data } = messageEvent
-          const messageEventData = JSON.parse(JSON.parse(unescape(data)))
-          const chatMessage = MessageAdapter.messageEventDataToChatMessage(messageEventData)
-          this.newMessageEmitter.emit(chatMessage)
+          const messageEventData = JSON.parse(data)
+          if (messageEventData.action === 'sendMessage') {
+            const chatMessage = MessageAdapter.messageEventDataToChatMessage(messageEventData, true)
+            this.newMessageEmitter.emit(chatMessage)
+          }
         }
       }
     );

@@ -1,8 +1,0 @@
-<div id="message-container">
-  <div *ngFor="let message of messages"><strong>{{message.sent_by}}</strong> ({{message.timestamp}}) {{message.text}}</div>
-</div>
-<br>
-<form [formGroup]="chatForm">
-  <input type="text" formControlName="message" (keydown.enter)="onSend()">
-</form>
-<button type="submit" (click)="onSend()">Send</button>

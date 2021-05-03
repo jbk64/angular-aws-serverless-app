@@ -1,0 +1,12 @@
+<input type="text"
+       nbInput
+       shape="rectangle"
+       placeholder="Search contacts">
+<nb-card>
+    <nb-list>
+      <nb-list-item *ngFor="let contact of contacts">
+        <nb-user [name]="contact.username" [title]="contact.lastMessage">
+        </nb-user>
+      </nb-list-item>
+    </nb-list>
+</nb-card>

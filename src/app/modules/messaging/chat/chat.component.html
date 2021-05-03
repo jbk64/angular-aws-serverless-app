@@ -1,0 +1,38 @@
+<!--<div id="message-container">-->
+<!--  <div *ngFor="let message of messages"><strong>{{message.sent_by}}</strong> ({{message.timestamp}}) {{message.text}}</div>-->
+<!--</div>-->
+<!--<br>-->
+<!--<form [formGroup]="chatForm">-->
+<!--  <input type="text" formControlName="message" (keydown.enter)="onSend()">-->
+<!--</form>-->
+<!--<button type="submit" (click)="onSend()">Send</button>-->
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <app-contact-list></app-contact-list>
+    </div>
+    <div class="col-sm">
+      <nb-chat
+        title="Serverless web chat"
+        status="primary"
+      >
+        <nb-chat-message *ngFor="let msg of messages"
+                         [type]="msg.type"
+                         [message]="msg.text"
+                         [reply]="msg.reply"
+                         [sender]="msg.user.name"
+                         [date]="msg.date"
+                         [files]="msg.files"
+                         [quote]="msg.quote"
+                         [latitude]="msg.latitude"
+                         [longitude]="msg.longitude"
+                         [avatar]="msg.user.avatar">
+        </nb-chat-message>
+        <nb-chat-form
+          (send)="onSend($event)"
+        >
+        </nb-chat-form>
+      </nb-chat>
+    </div>
+  </div>
+</div>

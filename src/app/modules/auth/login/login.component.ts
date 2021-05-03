@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CognitoService} from "../../services/cognito.service";
+import {CognitoService} from "../../../services/cognito.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup
+  error
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,8 +35,11 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['']);
         },
         onFailure: error => {
-          console.error(error)
+          this.error = error
         }
       })
+  }
+  onBack(): void {
+    this.router.navigate([''])
   }
 }

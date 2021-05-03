@@ -1,0 +1,48 @@
+<nb-card status="primary">
+  <nb-card-header>Log in</nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="loginForm">
+      <div class="mb-5">
+        <input
+          nbInput
+          fullWidth
+          id="username"
+          type="text"
+          formControlName="username"
+          placeholder="Username"
+        />
+      </div>
+      <div class="mb-5">
+        <input
+          nbInput
+          fullWidth
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+        />
+      </div>
+      <div class="mb-5">
+        <button
+          nbButton
+          fullWidth
+          status="primary"
+          (click)="onLogin()"
+        >Log in
+        </button>
+      </div>
+      <div class="mb-5">
+        <button
+          nbButton
+          fullWidth
+          (click)="onBack()"
+        >Back
+        </button>
+      </div>
+    </form>
+    <nb-alert
+      *ngIf="error"
+      status="danger">{{error.message}}
+    </nb-alert>
+  </nb-card-body>
+</nb-card>

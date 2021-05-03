@@ -1,0 +1,14 @@
+@import 'themes';
+@import '~@nebular/theme/styles/globals';
+
+@include nb-install() {
+  @include nb-theme-global();
+};
+
+.mb-5 {
+  margin-bottom: 0.5em;
+}
+
+.center-text {
+  text-align: center;
+}

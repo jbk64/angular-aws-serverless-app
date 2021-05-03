@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CognitoService} from "../../services/cognito.service";
+import {CognitoService} from "../../../services/cognito.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 export class SignupComponent implements OnInit {
 
   signUpForm: FormGroup
+  error: any
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,11 +33,15 @@ export class SignupComponent implements OnInit {
     this.cognitoService
       .signUp(username, email, password, (error, response) => {
         if (error) {
+          this.error = error
           console.log(error)
         } else {
           console.log(response)
           this.router.navigate(['/confirm-registration'], {queryParams: {username}});
         }
       })
+  }
+  onBack(): void {
+    this.router.navigate([''])
   }
 }
