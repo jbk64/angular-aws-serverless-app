@@ -1,13 +1,36 @@
-<h2>Confirm registration</h2>
-<form [formGroup]="confirmationForm">
-  <div>
-    <label for="code">Verification code:</label>
-    <input
-      id="code"
-      type="text"
-      formControlName="code"
-    />
-  </div>
-  <button type="button" (click)="onConfirm()">Verify</button>
-  <button type="button" (click)="onResend()">Resend</button>
-</form>
+<nb-layout>
+  <nb-layout-column>
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-md-6">
+          <nb-card status="primary">
+            <nb-card-header>Confirm registration</nb-card-header>
+            <nb-card-body>
+              <form [formGroup]="confirmationForm">
+                <div>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="code"
+                    type="text"
+                    formControlName="code"
+                    placeholder="Confirmation code"
+                  />
+                </div>
+                <button nbButton
+                        fullWidth
+                        status="primary"
+                        (click)="onConfirm()"
+                >Verify</button>
+                <button nbButton
+                        fullWidth
+                        (click)="onResend()"
+                >Resend</button>
+              </form>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+    </div>
+  </nb-layout-column>
+</nb-layout>
