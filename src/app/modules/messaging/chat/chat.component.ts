@@ -22,6 +22,7 @@ import {CognitoUser} from "amazon-cognito-identity-js";
 
 export class ChatComponent implements OnInit {
   cognitoUser: CognitoUser = null
+  conversationId: string = null
   messages: any[] = []
 
   constructor(
@@ -43,18 +44,14 @@ export class ChatComponent implements OnInit {
 
   onSend($event) {
     const {message} = $event
-    this.chatService.sendMessage(message, this.cognitoUser)
-    // this.messages.push({
-    //   text: message,
-    //   reply: false,
-    //   user: {
-    //     name: this.cognitoUser.getUsername()
-    //   },
-    // });
+    if (this.conversationId) {
+      this.chatService.sendMessage(message, this.conversationId, this.cognitoUser.getUsername())
+    }
   }
 
   onSelectedConversation(conversationId: string) {
     if (conversationId) {
+      this.conversationId = conversationId
       this.conversationService
         .getConversation(conversationId)
         .subscribe({

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Output} from '@angular/core';
 import {Observable, Observer, Subject} from "rxjs";
 
 @Injectable({
@@ -10,20 +10,27 @@ export class WebsocketService {
 
   subject: Subject<any>;
 
-  public connect(url): Subject<any> {
+  public connect(url, username): Subject<any> {
     if (!this.subject) {
-      this.subject = this.create(url);
+      this.subject = this.create(url, username);
     }
     return this.subject;
   }
 
-  private create(url): Subject<any> {
+  private create(url, username): Subject<any> {
     let ws = new WebSocket(url);
 
     let observable = new Observable((obs: Observer<MessageEvent>) => {
       ws.onmessage = obs.next.bind(obs);
       ws.onerror = obs.error.bind(obs);
       ws.onclose = obs.complete.bind(obs);
+      ws.onopen = () => {
+        const data = {
+          action: 'sendUsername',
+          username: username
+        }
+        ws.send(JSON.stringify(data))
+      }
       return ws.close.bind(ws);
     });
     let observer = {

@@ -6,7 +6,7 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class UserService {
-  private url = 'https://v3uxo526e5.execute-api.eu-central-1.amazonaws.com/dev/users'
+  private url = 'https://v3uxo526e5.execute-api.eu-central-1.amazonaws.com/dev/users/'
 
   constructor(private httpClient: HttpClient) {
   }
@@ -16,5 +16,9 @@ export class UserService {
    */
   list(searchQuery: string): Observable<string[]> {
     return this.httpClient.get<string[]>(this.url, {params: {search: searchQuery}})
+  }
+
+  updatePreferences(username, preferences): Observable<any> {
+    return this.httpClient.patch(this.url + username + '/preferences', preferences)
   }
 }

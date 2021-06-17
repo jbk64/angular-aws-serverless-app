@@ -3,6 +3,7 @@ import {UserService} from "../../../services/user.service";
 import {Observable, of} from "rxjs";
 import {CognitoService} from "../../../services/cognito.service";
 import {ConversationService} from "../../../services/conversation.service";
+import {LocalStorageService} from "../../../services/local-storage.service";
 
 @Component({
   selector: 'app-contact-list',
@@ -18,9 +19,11 @@ export class ContactListComponent implements OnInit {
   constructor(
     private userService: UserService,
     private conversationService: ConversationService,
-    private cognitoService: CognitoService) { }
+    private cognitoService: CognitoService,
+    private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
+    this.conversations = this.localStorageService.getItem('conversations')
     this.options = [];
     this.filteredOptions$ = of(this.options);
     const username = this.cognitoService.getCurrentUser().getUsername()
@@ -29,6 +32,7 @@ export class ContactListComponent implements OnInit {
       .subscribe({
         next: result => {
           this.conversations = result
+          this.localStorageService.setItem('conversations', this.conversations)
         },
         error: err => {
           console.error(err)

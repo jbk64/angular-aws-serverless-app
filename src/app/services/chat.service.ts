@@ -1,8 +1,8 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {WebsocketService} from "./websocket.service";
 import {environment} from "../../environments/environment";
-import {CognitoUser} from "amazon-cognito-identity-js";
 import {MessageAdapter} from "../adapters/message.adapter";
+import {CognitoService} from "./cognito.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,33 +11,36 @@ export class ChatService {
   private url = environment.awsWebsocketApiUrl
   private newMessageEmitter: EventEmitter<any> = new EventEmitter()
 
-  constructor(private websocketService: WebsocketService) {
-    this.websocketService.connect(this.url).subscribe(
+  constructor(
+    private websocketService: WebsocketService,
+    private cognitoService: CognitoService
+    ) {
+    const username = this.cognitoService.getCurrentUser().getUsername()
+    this.websocketService.connect(this.url, username).subscribe(
       {
         next: messageEvent => {
-          const { data } = messageEvent
-          const messageEventData = JSON.parse(data)
-          if (messageEventData.action === 'sendMessage') {
-            const chatMessage = MessageAdapter.messageEventDataToChatMessage(messageEventData, true)
-            this.newMessageEmitter.emit(chatMessage)
-          }
+          const {data} = messageEvent
+          this.handleIncomingMessage(data)
         }
       }
     );
+  }
+
+  handleIncomingMessage(data) {
+    const message = JSON.parse(data)
+    this.newMessageEmitter.emit(message)
   }
 
   getNewMessageEmitter(): EventEmitter<any> {
     return this.newMessageEmitter;
   }
 
-  sendMessage(text: string, user: CognitoUser) {
-    const username = user.getUsername()
-    const data = {
-      text,
+  sendMessage(content: string, conversationId: string, sender: string) {
+    this.websocketService.subject.next({
       action: 'sendMessage',
-      timestamp: Date.now(),
-      sent_by: username,
-    }
-    this.websocketService.subject.next(data)
+      content,
+      sender,
+      conversation_id: conversationId
+    })
   }
 }

@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {CognitoUser, CognitoUserAttribute, CognitoUserPool, AuthenticationDetails} from "amazon-cognito-identity-js";
+import {LocalStorageService} from "./local-storage.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CognitoService {
+
+  constructor(private localStorageService: LocalStorageService) {
+  }
 
   private poolData = {
     UserPoolId: environment.awsUserPoolId,
@@ -79,6 +83,7 @@ export class CognitoService {
    */
   logout () {
     const cognitoUser = this.userPool.getCurrentUser()
+    this.localStorageService.removeItem('conversations')
     cognitoUser.signOut()
   }
 }
