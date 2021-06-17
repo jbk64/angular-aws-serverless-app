@@ -26,7 +26,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.nbMenuService.onItemClick()
       .subscribe(menuBag => {
-        console.log(menuBag)
         if (menuBag.item.title === 'Settings') {
           this.router.navigate(['settings'])
         } else if (menuBag.item.title === 'Log out') {

@@ -1,6 +1,5 @@
-
 export class MessageAdapter {
-  static messageEventDataToChatMessage (messageEventData, reply = true) {
+  static messageEventDataToChatMessage(messageEventData, reply = true) {
     return {
       text: messageEventData.text,
       user: {

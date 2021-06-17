@@ -34,9 +34,8 @@ export class SignupComponent implements OnInit {
       .signUp(username, email, password, (error, response) => {
         if (error) {
           this.error = error
-          console.log(error)
+          console.error(error)
         } else {
-          console.log(response)
           this.router.navigate(['/confirm-registration'], {queryParams: {username}});
         }
       })

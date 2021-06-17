@@ -13,7 +13,6 @@ export class WebsocketService {
   public connect(url): Subject<any> {
     if (!this.subject) {
       this.subject = this.create(url);
-      console.log("Successfully connected: " + url);
     }
     return this.subject;
   }

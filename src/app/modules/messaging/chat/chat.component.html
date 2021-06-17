@@ -9,7 +9,9 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-4">
-      <app-contact-list></app-contact-list>
+      <app-contact-list
+        (selectedConversation)="onSelectedConversation($event)"
+      ></app-contact-list>
     </div>
     <div class="col-sm-8">
       <nb-chat
@@ -17,16 +19,11 @@
         status="primary"
       >
         <nb-chat-message *ngFor="let msg of messages"
-                         [type]="msg.type"
-                         [message]="msg.text"
-                         [reply]="msg.reply"
-                         [sender]="msg.user.name"
-                         [date]="msg.date"
-                         [files]="msg.files"
-                         [quote]="msg.quote"
-                         [latitude]="msg.latitude"
-                         [longitude]="msg.longitude"
-                         [avatar]="msg.user.avatar">
+                         type="text"
+                         [message]="msg.content"
+                         [reply]="cognitoUser.getUsername() !== msg.sender"
+                         [sender]="msg.sender"
+                         [date]="msg.date">
         </nb-chat-message>
         <nb-chat-form
           (send)="onSend($event)"

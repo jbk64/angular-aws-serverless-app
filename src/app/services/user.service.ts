@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {User} from "../types/User";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,10 @@ export class UserService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getUsers(): Observable<User[]> {
-    return this.httpClient.get<User[]>(this.url)
+  /**
+   * @param searchQuery - User search query
+   */
+  list(searchQuery: string): Observable<string[]> {
+    return this.httpClient.get<string[]>(this.url, {params: {search: searchQuery}})
   }
 }

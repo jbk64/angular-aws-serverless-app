@@ -1,14 +1,38 @@
+<nb-card>
+  <ng-template #noConversation>
+    <nb-card-body>
+      <p>You don't have any conversations yet. Use the search field below to find users to chat with!</p>
+    </nb-card-body>
+  </ng-template>
+  <nb-card-body style="padding: 0" *ngIf="conversations.length>0; else noConversation">
+    <nb-list>
+      <nb-list-item
+        *ngFor="let conversation of conversations"
+        (click)="onConversationSelected(conversation.id)"
+      >
+        <div>
+          <nb-user
+            [name]="conversation['withUser']"
+            [title]="conversation['lastMessage']"
+          >
+          </nb-user>
+        </div>
+      </nb-list-item>
+    </nb-list>
+  </nb-card-body>
+</nb-card>
 <input type="text"
        nbInput
        shape="rectangle"
-       placeholder="Search contacts"
+       placeholder="Find users"
        [fullWidth]="true"
+       (input)="onSearch($event)"
+       [nbAutocomplete]="auto"
 >
-<nb-card>
-    <nb-list>
-      <nb-list-item *ngFor="let contact of contacts">
-        <nb-user [name]="contact.username" [title]="contact.lastMessage">
-        </nb-user>
-      </nb-list-item>
-    </nb-list>
-</nb-card>
+<nb-autocomplete #auto (selectedChange)="onUserSelection($event)">
+
+  <nb-option *ngFor="let option of filteredOptions$ | async" [value]="option">
+    {{ option }}
+  </nb-option>
+
+</nb-autocomplete>

@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ChatService} from "../../../services/chat.service";
 import {CognitoService} from "../../../services/cognito.service";
+import {ConversationService} from "../../../services/conversation.service";
+import {CognitoUser} from "amazon-cognito-identity-js";
 
 @Component({
   selector: 'app-chat',
@@ -19,14 +21,17 @@ import {CognitoService} from "../../../services/cognito.service";
 })
 
 export class ChatComponent implements OnInit {
+  cognitoUser: CognitoUser = null
   messages: any[] = []
 
   constructor(
     private chatService: ChatService,
-    private cognitoService: CognitoService) {
+    private cognitoService: CognitoService,
+    private conversationService: ConversationService) {
   }
 
   ngOnInit(): void {
+    this.cognitoUser = this.cognitoService.getCurrentUser()
     this.chatService
       .getNewMessageEmitter()
       .subscribe({
@@ -38,15 +43,31 @@ export class ChatComponent implements OnInit {
 
   onSend($event) {
     const {message} = $event
-    const cognitoUser = this.cognitoService.getCurrentUser()
-    this.chatService.sendMessage(message, cognitoUser)
-    this.messages.push({
-      text: message,
-      // date: new Date(),
-      reply: false,
-      user: {
-        name: cognitoUser.getUsername()
-      },
-    });
+    this.chatService.sendMessage(message, this.cognitoUser)
+    // this.messages.push({
+    //   text: message,
+    //   reply: false,
+    //   user: {
+    //     name: this.cognitoUser.getUsername()
+    //   },
+    // });
+  }
+
+  onSelectedConversation(conversationId: string) {
+    if (conversationId) {
+      this.conversationService
+        .getConversation(conversationId)
+        .subscribe({
+          next: messages => {
+            messages.map(m => m.date = new Date(Number(m.timestamp)))
+            this.messages = messages
+            console.log(this.messages)
+            // this.messages = messages.map(m => MessageAdapter.apiToNbChatMessage(m, this.cognitoUser.getUsername()))
+          },
+          error: err => {
+            console.error(err)
+          }
+        })
+    }
   }
 }
