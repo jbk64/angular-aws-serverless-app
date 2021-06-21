@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {Conversation} from "../types/conversation";
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,8 @@ export class ConversationService {
    * Get a user's conversations
    * @param username
    */
-  getUserConversations(username): Observable<string[]> {
-    return this.httpClient.get<string[]>(this.usersUrl + username + '/conversations')
+  getUserConversations(username): Observable<Conversation[]> {
+    return this.httpClient.get<Conversation[]>(this.usersUrl + username + '/conversations')
   }
 
   /**

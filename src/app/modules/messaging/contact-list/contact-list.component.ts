@@ -24,8 +24,6 @@ export class ContactListComponent implements OnInit {
 
   ngOnInit(): void {
     this.conversations = this.localStorageService.getItem('conversations')
-    this.options = [];
-    this.filteredOptions$ = of(this.options);
     const username = this.cognitoService.getCurrentUser().getUsername()
     this.conversationService
       .getUserConversations(username)

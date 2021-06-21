@@ -1,0 +1,46 @@
+<div class="container" style="height: 100vh">
+  <div class="row justify-content-center" style="height: 100%">
+    <div class="col" style="margin: auto auto; max-width: 330px">
+      <div class="mb-4 text-center">
+        <img
+          src="assets/images/app-icon.png"
+          class="img-fluid mx-auto d-block"
+          style="height: auto; max-width: 150px;"
+          alt="Serverless web chat"
+        >
+        <h3>Serverless Web Chat</h3>
+      </div>
+      <form [formGroup]="loginForm">
+        <div class="mb-3">
+          <input
+            type="text"
+            formControlName="username"
+            class="form-control form-control-lg rounded-0"
+            placeholder="Username">
+          <input
+            type="password"
+            formControlName="password"
+            class="form-control form-control-lg rounded-0"
+            placeholder="Password">
+        </div>
+        <div
+          *ngIf="error"
+          class="alert alert-warning"
+          role="alert">
+          {{error.message}}
+        </div>
+        <div class="mb-3">
+          <button
+            type="submit"
+            class="btn btn-md btn-primary rounded-0"
+            (click)="onLogin()"
+          >Log in
+          </button>
+        </div>
+        <div class="mb-3">
+          <a routerLink="/signup">Sign up</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="container" style="height: 100vh">
+  <div class="row justify-content-center" style="height: 100%">
+    <div class="col" style="margin: auto auto; max-width: 330px">
+      <form [formGroup]="confirmationForm">
+        <div class="mb-3">
+          <input
+            type="text"
+            formControlName="code"
+            class="form-control form-control-lg rounded-0"
+            placeholder="Code">
+        </div>
+        <div class="mb-3">
+          <button
+            type="submit"
+            class="btn btn-md btn-primary rounded-0"
+            (click)="onConfirm()"
+          >Confirm
+          </button>
+        </div>
+        <div class="mb-3">
+          <p>
+            <a routerLink="/login">Sign in</a>
+          </p>
+          <p>
+            <a routerLink="/signup">Sign up</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

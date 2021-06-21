@@ -15,12 +15,25 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NbEvaIconsModule} from '@nebular/eva-icons';
 import {BaseModule} from "./modules/base/base.module";
 import {AuthModule} from "./modules/auth/auth.module";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MessagingModule} from "./modules/messaging/messaging.module";
+import { LayoutComponent } from './components/layout/layout.component';
+import { ConversationListComponent } from './components/conversation-list/conversation-list.component';
+import { ConversationComponent } from './components/conversation/conversation.component';
+import { LoginComponent } from './components/login/login.component';
+import {RouterModule} from "@angular/router";
+import { SignupComponent } from './components/signup/signup.component';
+import { ConfirmRegistrationComponent } from './components/confirm-registration/confirm-registration.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LayoutComponent,
+    ConversationListComponent,
+    ConversationComponent,
+    LoginComponent,
+    SignupComponent,
+    ConfirmRegistrationComponent
   ],
   imports: [
     BaseModule,
@@ -36,7 +49,9 @@ import {MessagingModule} from "./modules/messaging/messaging.module";
     NbMenuModule.forRoot(),
     NbEvaIconsModule,
     ReactiveFormsModule,
-    NbActionsModule
+    NbActionsModule,
+    FormsModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

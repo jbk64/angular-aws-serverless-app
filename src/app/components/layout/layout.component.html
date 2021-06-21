@@ -1,0 +1,141 @@
+<!-- ConverationListTopBar -->
+<div
+  class="container-fluid p-0 bg-light"
+>
+  <div
+    *ngIf="!selectedConversation; else conversationTopBar"
+    class="row border-bottom"
+    style="padding-right: 10px"
+  >
+    <div class="col-2 text-center p-0" style="max-width: 100px">
+      <a
+        class="btn no-focus"
+        data-bs-toggle="offcanvas"
+        href="#offcanvasExample"
+        role="button"
+        aria-controls="offcanvasExample"
+      ><i class="bi bi-list fs-1"></i>
+      </a>
+    </div>
+    <div class="col p-2">
+      <input
+        [ngModel]="search"
+        type="text"
+        class="form-control rounded-0 no-focus"
+        placeholder="Find users"
+        style="height: 100%;"
+        (keyup)="onSearch($event)"
+      >
+    </div>
+  </div>
+</div>
+
+<!-- ConversationTopBar -->
+<ng-template #conversationTopBar>
+  <div class="container-fluid p-0">
+    <div
+      class="row border-bottom bg-light"
+      style="padding-right: 10px"
+    >
+      <div class="col-2 text-center p-0" style="max-width: 100px; margin: 0 auto">
+        <a
+          class="btn no-focus"
+          data-bs-toggle="offcanvas"
+          role="button"
+          aria-controls="offcanvasExample"
+          (click)="onConversationDeselected()"
+        ><i class="bi bi-arrow-left fs-1"></i></a>
+      </div>
+      <div class="col text-center fs-5 pt-2">
+        <span class="align-middle">{{selectedConversation.withUser}}</span>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- ConversationList -->
+<div *ngIf="!searchMode; else searchResultsBlock">
+  <app-conversation-list
+    *ngIf="!selectedConversation; else conversationBlock"
+    (conversationSelected)="onConversationSelected($event)"
+  ></app-conversation-list>
+</div>
+
+<!-- SearchResults -->
+<ng-template #searchResultsBlock>
+  <div
+    class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
+    *ngIf="searchResults">
+    <div
+      class="list-group list-group-flush border-bottom scrollarea"
+    >
+      <a
+        *ngFor="let result of searchResults"
+        href="#"
+        class="list-group-item list-group-item-action py-3 lh-tight"
+        aria-current="true"
+        (click)="onSearchResultClick(result)"
+      >
+        <div
+          class="d-flex w-100 align-items-center justify-content-between">
+          <strong class="mb-1">{{result}}</strong>
+        </div>
+      </a>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Conversation -->
+<ng-template #conversationBlock>
+  <app-conversation
+    [conversation]="selectedConversation"
+  ></app-conversation>
+</ng-template>
+
+<!-- Offcanvas -->
+<div
+  class="offcanvas offcanvas-start"
+  tabindex="-1"
+  id="offcanvasExample"
+  aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close">
+    </button>
+  </div>
+  <div class="offcanvas-body text-center">
+    <div class="mb-3">
+      <img
+        src="{{this.imageUrl}}"
+        class="rounded-circle"
+        style="height: auto; max-width: 150px"
+        alt="Profile image">
+    </div>
+    <div class="mb-3">
+      <input
+        class="form-control rounded-0"
+        style="width: 100%"
+        type="file"
+        (change)="uploadFile($event)"
+      >
+    </div>
+    <div class="mb-3">
+      <input
+        class="form-control rounded-0"
+        type="text"
+        placeholder="Update your bio..."
+      >
+    </div>
+    <div class="mb-3 d-flex align-content-end flex-wrap">
+      <button
+        class="btn btn-primary form-control rounded-0"
+        (click)="onLogout()"
+      >
+        Log out
+      </button>
+    </div>
+  </div>
+</div>

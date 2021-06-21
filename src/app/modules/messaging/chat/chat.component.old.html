@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <app-contact-list
+        (selectedConversation)="onSelectedConversation($event)"
+      ></app-contact-list>
+    </div>
+    <div class="col-8">
+      <nb-layout>
+        <nb-layout-column style="padding: 0">
+          <nb-chat
+            title="Chat"
+            status="primary"
+            size="large"
+          >
+            <nb-chat-message *ngFor="let msg of messages"
+                             type="text"
+                             [message]="msg.content"
+                             [reply]="cognitoUser.getUsername() !== msg.sender"
+                             [sender]="msg.sender"
+                             [date]="msg.date">
+            </nb-chat-message>
+            <nb-chat-form
+              (send)="onSend($event)"
+            >
+            </nb-chat-form>
+          </nb-chat>
+        </nb-layout-column>
+      </nb-layout>
+    </div>
+  </div>
+</div>

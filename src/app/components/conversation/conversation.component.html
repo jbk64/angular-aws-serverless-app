@@ -1,0 +1,64 @@
+<div
+  class="container"
+  style="height: 100vh"
+  *ngIf="loading"
+>
+  <div class="row" style="height: 100%">
+    <div class="col text-center"
+         style="margin: auto auto">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  id="scrollable"
+  class="container-fluid scrollbar-hidden"
+  style="
+  overflow-y: scroll;
+  height: 100vh;
+"
+>
+  <div
+    class="row"
+    style="padding-bottom: 200px"
+  >
+    <div
+      class="text-center"
+      style="margin: auto auto"
+      *ngIf="loading"
+    >
+    </div>
+    <div
+      class="col-12"
+      *ngFor="let m of messages"
+    >
+      <div
+        class="card mt-2"
+        [ngClass]="{
+        'float-end': cognitoUser.getUsername() === m.sender,
+        'float-start': cognitoUser.getUsername() !== m.sender
+        }"
+      >
+        <div
+          class="card-body"
+          style="min-width: 150px"
+          [ngClass]="cognitoUser.getUsername() === m.sender ?'bg-primary text-white': 'bg-light'"
+        >
+          {{m.content}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="navbar fixed-bottom navbar-light bg-light p-2 border-top">
+    <input
+      type="text"
+      class="form-control rounded-0 border-bottom no-focus"
+      placeholder="Write a message..."
+      (keyup.enter)="onSend($event)"
+      [(ngModel)]="message"
+    >
+  </nav>
+</div>

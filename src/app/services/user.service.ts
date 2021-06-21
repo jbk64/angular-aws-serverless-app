@@ -14,7 +14,7 @@ export class UserService {
   /**
    * @param searchQuery - User search query
    */
-  list(searchQuery: string): Observable<string[]> {
+  list(searchQuery: string): Observable<any[]> {
     return this.httpClient.get<string[]>(this.url, {params: {search: searchQuery}})
   }
 

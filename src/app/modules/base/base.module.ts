@@ -21,7 +21,8 @@ import {RouterModule} from "@angular/router";
 @NgModule({
   declarations: [MenuComponent, HomeComponent, SettingsComponent, HeaderComponent],
   exports: [
-    HomeComponent
+    HomeComponent,
+    MenuComponent
   ],
   imports: [
     CommonModule,
