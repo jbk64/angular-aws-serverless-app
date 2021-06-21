@@ -67,12 +67,12 @@
     class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
     *ngIf="searchResults">
     <div
-      class="list-group list-group-flush border-bottom scrollarea"
+      class="list-group list-group-flush scrollarea p-2"
     >
       <a
         *ngFor="let result of searchResults"
         href="#"
-        class="list-group-item list-group-item-action py-3 lh-tight"
+        class="list-group-item list-group-item-action py-3 bg-primary text-white rounded-1 mb-2"
         aria-current="true"
         (click)="onSearchResultClick(result)"
       >

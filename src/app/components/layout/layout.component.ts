@@ -84,7 +84,6 @@ export class LayoutComponent implements OnInit {
   onSearchResultClick(username) {
     const currentUser = this.cognitoService.getCurrentUser().getUsername()
     const conversations = this.localstorageService.getItem('conversations')
-    console.log(conversations)
     if (!conversations.map(c => c['with']).includes(username)) {
       this.conversationService
         .createConversation(currentUser, username)
