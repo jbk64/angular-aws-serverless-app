@@ -67,7 +67,7 @@ export class LayoutComponent implements OnInit {
     }
   }
 
-  uploadFile($event: Event) {
+  onProfileImageChange($event: Event) {
     const target = $event.target as HTMLInputElement
     this.S3Service.putObject(
       this.cognitoUser.getUsername(),
@@ -98,5 +98,20 @@ export class LayoutComponent implements OnInit {
     }
     this.searchMode = false
     this.search = ""
+  }
+
+  onBioChange($event) {
+    const bio = $event.target.value
+    const username = this.cognitoService.getCurrentUser().getUsername()
+    this.userService
+      .updatePreferences(username, {bio})
+      .subscribe({
+        next: () => {
+          console.log('updated')
+        },
+        error: err => {
+          console.error(err)
+        }
+      })
   }
 }

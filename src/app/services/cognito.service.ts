@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
-import {CognitoUser, CognitoUserAttribute, CognitoUserPool, AuthenticationDetails} from "amazon-cognito-identity-js";
+import {AuthenticationDetails, CognitoUser, CognitoUserAttribute, CognitoUserPool} from "amazon-cognito-identity-js";
 import {LocalStorageService} from "./local-storage.service";
 
 @Injectable({
@@ -18,13 +18,6 @@ export class CognitoService {
 
   private userPool = new CognitoUserPool(this.poolData)
 
-  /**
-   * Sign a user up
-   * @param username
-   * @param email
-   * @param password
-   * @param callback
-   */
   signUp(username: string, email: string, password: string, callback) {
     const cognitoUserEmail = new CognitoUserAttribute({
       Name: 'email',
@@ -33,38 +26,16 @@ export class CognitoService {
     this.userPool.signUp(username, password, [cognitoUserEmail], null, callback)
   }
 
-  /**
-   * Confirms a registration verification code
-   * @param username
-   * @param code
-   * @param callback
-   */
   confirmRegistration(username: string, code: string, callback) {
     const cognitoUser = new CognitoUser({Username: username, Pool: this.userPool})
     cognitoUser.confirmRegistration(code, true, callback)
   }
 
-  /**
-   * Resends a registration verification code
-   */
-  resendVerificationCode () {
-    // TODO: implement
-  }
-
-  /**
-   * Get the current logged in user. Null if logged out
-   */
-  getCurrentUser (): CognitoUser {
+  getCurrentUser(): CognitoUser {
     return this.userPool.getCurrentUser()
   }
 
-  /**
-   * Logs a user in
-   * @param username
-   * @param password
-   * @param callbacks
-   */
-  login (username: string, password: string, callbacks) {
+  login(username: string, password: string, callbacks) {
     const authData = {
       Username: username,
       Password: password
@@ -78,10 +49,7 @@ export class CognitoService {
     cognitoUser.authenticateUser(authDetails, callbacks)
   }
 
-  /**
-   * Logs a user out
-   */
-  logout () {
+  logout() {
     const cognitoUser = this.userPool.getCurrentUser()
     this.localStorageService.removeItem('conversations')
     cognitoUser.signOut()

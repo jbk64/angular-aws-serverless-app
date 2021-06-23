@@ -119,7 +119,7 @@
         class="form-control rounded-0"
         style="width: 100%"
         type="file"
-        (change)="uploadFile($event)"
+        (change)="onProfileImageChange($event)"
       >
     </div>
     <div class="mb-3">
@@ -127,6 +127,7 @@
         class="form-control rounded-0"
         type="text"
         placeholder="Update your bio..."
+        (change)="onBioChange($event)"
       >
     </div>
     <div class="mb-3 d-flex align-content-end flex-wrap">

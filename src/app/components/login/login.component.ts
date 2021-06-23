@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CognitoService} from "../../services/cognito.service";
 import {Router} from "@angular/router";
+import {LocalStorageService} from "../../services/local-storage.service";
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private cognitoService: CognitoService,
-    private router: Router
+    private router: Router,
+    private localStorageService: LocalStorageService
   ) {
   }
 
@@ -31,7 +33,8 @@ export class LoginComponent implements OnInit {
     this.cognitoService
       .login(username, password, {
         onSuccess: result => {
-          console.log(result)
+          const token = result.getIdToken().getJwtToken()
+          this.localStorageService.setItem('token', token)
           this.router.navigate(['']);
         },
         onFailure: error => {
