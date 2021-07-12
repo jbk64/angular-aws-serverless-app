@@ -21,4 +21,8 @@ export class UserService {
   updatePreferences(username, preferences): Observable<any> {
     return this.httpClient.patch(this.url + username + '/preferences', preferences)
   }
+
+  getPreferences(username): Observable<any> {
+    return this.httpClient.get(this.url + username + '/preferences')
+  }
 }

@@ -19,6 +19,7 @@ export class LayoutComponent implements OnInit {
   searchMode = false
   search: string = null
   searchResults: string[] = []
+  userPreferences = {}
 
   constructor(
     private userService: UserService,
@@ -34,6 +35,7 @@ export class LayoutComponent implements OnInit {
     this.imageUrl = this.S3Service.getImageUrl(
       this.cognitoUser.getUsername()
     )
+    this.getUserPreferences()
   }
 
   onConversationSelected(conversation: Conversation) {
@@ -111,6 +113,19 @@ export class LayoutComponent implements OnInit {
         },
         error: err => {
           console.error(err)
+        }
+      })
+  }
+
+  getUserPreferences() {
+    this.userService
+      .getPreferences(this.cognitoUser.getUsername())
+      .subscribe({
+        next: preferences => {
+          this.userPreferences = preferences
+        },
+        error: error => {
+          console.error(error)
         }
       })
   }

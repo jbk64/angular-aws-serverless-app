@@ -3,6 +3,7 @@ import {Conversation} from "../../types/conversation";
 import {ConversationService} from "../../services/conversation.service";
 import {CognitoService} from "../../services/cognito.service";
 import {LocalStorageService} from "../../services/local-storage.service";
+import {S3Service} from "../../services/s3.service";
 
 @Component({
   selector: 'app-conversation-list',
@@ -17,7 +18,8 @@ export class ConversationListComponent implements OnInit {
   constructor(
     private conversationService: ConversationService,
     private cognitoService: CognitoService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private S3Service: S3Service
   ) {
   }
 
@@ -28,8 +30,11 @@ export class ConversationListComponent implements OnInit {
     this.conversationService
       .getUserConversations(username)
       .subscribe({
-        next: data => {
-          this.conversations = data
+        next: conversations => {
+          this.conversations = conversations
+          this.conversations = conversations.map(c => {
+            return {...c, withUserImage: this.S3Service.getImageUrl(c.withUser)} as Conversation
+          })
           this.localStorageService.setItem('conversations', this.conversations)
           this.loading = false
         },

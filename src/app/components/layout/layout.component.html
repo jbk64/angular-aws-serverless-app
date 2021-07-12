@@ -126,8 +126,9 @@
       <input
         class="form-control rounded-0"
         type="text"
-        placeholder="Update your bio..."
+        placeholder="Update your bio"
         (change)="onBioChange($event)"
+        value="{{this.userPreferences['bio']}}"
       >
     </div>
     <div class="mb-3 d-flex align-content-end flex-wrap">

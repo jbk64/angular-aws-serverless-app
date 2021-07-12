@@ -25,11 +25,30 @@
     >
       <div
         class="d-flex w-100 align-items-center justify-content-between">
-        <strong class="mb-1">{{c.withUser}}</strong>
-        <small *ngIf="c.lastMessageTimestamp">{{c.lastMessageTimestamp | date: 'd/M/yy, h:mm a' }}</small>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-2 col-lg-1">
+              <img
+                src="{{ c.withUserImage }}"
+                alt=""
+                class="img-fluid rounded-circle"
+                style="height: auto; max-width: 75px"
+              >
+            </div>
+            <div class="col-6 col-lg-7">
+              <strong class="mb-1">{{c.withUser}}</strong>
+              <div class="mb-1 small">{{c.lastMessage}}</div>
+            </div>
+            <div class="col-4 text-end">
+              <small
+                *ngIf="c.lastMessageTimestamp"
+                style="width: 100%"
+              >{{c.lastMessageTimestamp | date: 'd/M/yy, h:mm a' }}
+              </small>
+            </div>
+          </div>
+        </div>
       </div>
-      <div
-        class="col-10 mb-1 small">{{c.lastMessage}}</div>
     </a>
   </div>
 </div>
