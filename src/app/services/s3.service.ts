@@ -3,8 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import * as AWS from 'aws-sdk'
 
 const credentials = {
-  accessKeyId: 'AKIAUDMTD7V3IENV2XRO',
-  secretAccessKey: '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'
+  accessKeyId: '********',
+  secretAccessKey: '********'
 };
 AWS.config.update({credentials: credentials, region: 'eu-central-1'})
 
