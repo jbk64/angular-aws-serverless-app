@@ -4,7 +4,7 @@
 
 The purpose of this project was to deepen my understanding of cloud technologies from a developer's perspective by developing a simple **webchat app** using AWS Serverless services.
 
-*Disclaimer : the aim of this project was to learn more about AWS cloud services in a practical way, not to demonstrate general coding best practices. Many improvements should be made to the code quality and security aspects of this projects in a production context.*
+*Disclaimer : the aim of this project was to learn more about AWS cloud services in a practical way, not to demonstrate general coding best practices. Many improvements should be made to the code quality and security aspects of this project in a production context.*
 
 ## Architecture
 
